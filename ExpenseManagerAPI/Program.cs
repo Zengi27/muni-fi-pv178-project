@@ -1,4 +1,5 @@
 using DbModel;
+using DbModel.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ExpenseManagerDbContext>(options =>
     options.UseSqlite("Data Source=../DbModel/ExpenseManager.db"));
+builder.Services.AddDefaultIdentity<User>()
+    .AddEntityFrameworkStores<ExpenseManagerDbContext>();
 
 var app = builder.Build();
 

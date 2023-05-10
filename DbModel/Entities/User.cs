@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace DbModel.Entities;
 
-public class User
+public class User : IdentityUser<int>
 {
-    public int Id { get; set; }
+    [PersonalData]
     public string FullName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    [PersonalData]
     public ICollection<Income> Incomes { get; set; }
+    [PersonalData]
     public ICollection<Expense> Expenses { get; set; }
 }

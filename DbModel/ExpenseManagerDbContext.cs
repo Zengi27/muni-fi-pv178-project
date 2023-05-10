@@ -1,9 +1,10 @@
 ﻿using DbModel.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbModel;
 
-public class ExpenseManagerDbContext : DbContext
+public class ExpenseManagerDbContext : IdentityUserContext<User, int>
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Income> Incomes { get; set; }
@@ -11,5 +12,10 @@ public class ExpenseManagerDbContext : DbContext
     
     public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options) : base(options)
     {
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
     }
 }

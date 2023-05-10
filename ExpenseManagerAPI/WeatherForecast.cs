@@ -1,4 +1,4 @@
-namespace ExpenseMangerAPI;
+namespace ExpenseManagerAPI;
 
 public class WeatherForecast
 {
