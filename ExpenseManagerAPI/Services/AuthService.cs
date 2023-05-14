@@ -74,6 +74,7 @@ public class AuthService
     {
         var user = await _userManager.Users
             .Include(u => u.Expenses)
+            .Include(u => u.Incomes)
             .SingleOrDefaultAsync(u => u.UserName == username);
 
         return user;

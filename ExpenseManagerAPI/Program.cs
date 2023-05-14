@@ -40,6 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddTransient<AuthService>();
 builder.Services.AddTransient<ExpenseService>();
+builder.Services.AddTransient<IncomeService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
