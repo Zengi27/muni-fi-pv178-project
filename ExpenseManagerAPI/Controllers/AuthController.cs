@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseManagerAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("auth")]
 public class AuthController : ControllerBase
 {
     private readonly AuthService _authService;
