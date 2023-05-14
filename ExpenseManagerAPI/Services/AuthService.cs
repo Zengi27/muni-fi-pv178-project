@@ -5,6 +5,7 @@ using DbModel;
 using DbModel.Entities;
 using ExpenseManagerAPI.DTOs;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ExpenseManagerAPI.Services;
@@ -67,6 +68,15 @@ public class AuthService
             Success = false,
             ErrorMessage = result.Errors.FirstOrDefault()?.Description
         };
+    }
+    
+    public async Task<User?> GetCurrentUser(string username)
+    {
+        var user = await _userManager.Users
+            .Include(u => u.Expenses)
+            .SingleOrDefaultAsync(u => u.UserName == username);
+
+        return user;
     }
 
     private async Task<string> CreateToken(string username)

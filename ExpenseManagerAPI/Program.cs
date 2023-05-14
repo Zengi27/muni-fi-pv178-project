@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<ExpenseManagerDbContext>(options =>
     options.UseSqlite("Data Source=../DbModel/ExpenseManager.db"));
 builder.Services.AddDefaultIdentity<User>(options =>
@@ -38,6 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddTransient<AuthService>();
+builder.Services.AddTransient<ExpenseService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

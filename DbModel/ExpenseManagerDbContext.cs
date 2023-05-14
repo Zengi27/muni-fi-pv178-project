@@ -17,5 +17,11 @@ public class ExpenseManagerDbContext : IdentityUserContext<User, int>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Expenses)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
