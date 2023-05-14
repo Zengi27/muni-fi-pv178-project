@@ -122,4 +122,102 @@ public class ExpenseService
         
         return ServiceResult<ExpenseDto>.Success(_mapper.Map<ExpenseDto>(expense));
     }
+
+    public async Task<ServiceResult<IEnumerable<ExpenseDto>>> FilterByDate(string username, DateTime startDate, DateTime endDate)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<IEnumerable<ExpenseDto>>.Failure("You are not authorized", ResultCode.Unauthorized);
+        } 
+        
+        var expenses = user.Expenses
+            .Where(e => e.Date >= startDate && e.Date <= endDate)
+            .Select(e => _mapper.Map<ExpenseDto>(e));
+        
+        return ServiceResult<IEnumerable<ExpenseDto>>.Success(expenses);
+    }
+    
+    public async Task<ServiceResult<IEnumerable<ExpenseDto>>> GetMostExpensiveExpenses(string username, int count)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<IEnumerable<ExpenseDto>>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var expenses = user.Expenses
+            .OrderByDescending(e => e.Amount)
+            .Take(count)
+            .Select(e => _mapper.Map<ExpenseDto>(e));
+
+        return ServiceResult<IEnumerable<ExpenseDto>>.Success(expenses);
+    }
+    
+    public async Task<ServiceResult<IEnumerable<ExpenseDto>>> GetCheapestExpenses(string username, int count)
+    {
+        var user = await _authService.GetCurrentUser(username);
+    
+        if (user == null)
+        {
+            return ServiceResult<IEnumerable<ExpenseDto>>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var expenses = user.Expenses
+            .OrderBy(e => e.Amount)
+            .Take(count)
+            .Select(e => _mapper.Map<ExpenseDto>(e));
+    
+        return ServiceResult<IEnumerable<ExpenseDto>>.Success(expenses);
+    }
+    
+    public async Task<ServiceResult<ExpenseReportDto>> GetMonthlyExpenseReport(string username, int year, int month)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<ExpenseReportDto>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var expenses = user.Expenses
+            .Where(e => e.Date.Month == month && e.Date.Year == year)
+            .ToList();
+
+        var monthlyReport = new ExpenseReportDto
+        {
+            Year = year,
+            Month = month,
+            TotalAmount = expenses.Sum(e => e.Amount),
+            Expenses = expenses.Select(e => _mapper.Map<ExpenseDto>(e))
+        };
+
+        return ServiceResult<ExpenseReportDto>.Success(monthlyReport);
+    }
+
+    public async Task<ServiceResult<ExpenseReportDto>> GetYearlyExpenseReport(string username, int year)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<ExpenseReportDto>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var expenses = user.Expenses
+            .Where(e => e.Date.Year == year)
+            .ToList();
+
+        var monthlyReport = new ExpenseReportDto
+        {
+            Year = year,
+            TotalAmount = expenses.Sum(e => e.Amount),
+            Expenses = expenses.Select(e => _mapper.Map<ExpenseDto>(e))
+        };
+
+        return ServiceResult<ExpenseReportDto>.Success(monthlyReport);
+    }
+    
 }

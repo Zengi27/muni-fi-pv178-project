@@ -70,6 +70,51 @@ public class ExpenseController : ControllerBase
         return HandleServiceResult(serviceResult);
     }
     
+    [HttpGet("filter-by-date")]
+    public async Task<IActionResult> GetExpensesByDateRange(DateTime startDate, DateTime? endDate = null)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _expenseService.FilterByDate(username, startDate, endDate ?? DateTime.UtcNow);
+    
+        return HandleServiceResult(serviceResult);
+    }
+    
+    [HttpGet("most-expensive/{count}")]
+    public async Task<IActionResult> GetMostExpensiveExpenses(int count)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _expenseService.GetMostExpensiveExpenses(username, count);
+
+        return HandleServiceResult(serviceResult);
+    }
+    
+    [HttpGet("cheapest/{count}")]
+    public async Task<IActionResult> GetCheapestExpenses(int count)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _expenseService.GetCheapestExpenses(username, count);
+
+        return HandleServiceResult(serviceResult);
+    }
+    
+    [HttpGet("monthly-report/{year}/{month}")]
+    public async Task<IActionResult> GetMonthlyExpenseReport(int year, int month)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _expenseService.GetMonthlyExpenseReport(username, year, month);
+
+        return HandleServiceResult(serviceResult);
+    }
+    
+    [HttpGet("yearly-report/{year}")]
+    public async Task<IActionResult> GetYearlyExpenseReport(int year)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _expenseService.GetYearlyExpenseReport(username, year);
+
+        return HandleServiceResult(serviceResult);
+    }
+    
     private IActionResult HandleServiceResult<T>(ServiceResult<T> serviceResult)
     {
         switch (serviceResult.ResultCode)
