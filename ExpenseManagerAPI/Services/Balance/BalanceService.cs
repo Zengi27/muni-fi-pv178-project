@@ -1,6 +1,7 @@
 using ExpenseManagerAPI.DTOs.Balance;
+using ExpenseManagerAPI.Services.Auth;
 
-namespace ExpenseManagerAPI.Services;
+namespace ExpenseManagerAPI.Services.Balance;
 
 public class BalanceService
 {

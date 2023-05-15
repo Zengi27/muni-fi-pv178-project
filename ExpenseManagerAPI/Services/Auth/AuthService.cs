@@ -1,15 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DbModel;
 using DbModel.Entities;
-using ExpenseManagerAPI.DTOs;
 using ExpenseManagerAPI.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ExpenseManagerAPI.Services;
+namespace ExpenseManagerAPI.Services.Auth;
 
 public class AuthService
 {

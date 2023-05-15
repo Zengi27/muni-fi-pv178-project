@@ -1,4 +1,4 @@
-namespace ExpenseManagerAPI.Services;
+namespace ExpenseManagerAPI.Services.Auth;
 
 public class AuthenticationResult
 {

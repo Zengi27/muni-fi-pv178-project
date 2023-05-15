@@ -2,9 +2,10 @@ using AutoMapper;
 using DbModel;
 using DbModel.Entities;
 using ExpenseManagerAPI.DTOs.Income;
+using ExpenseManagerAPI.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExpenseManagerAPI.Services;
+namespace ExpenseManagerAPI.Services.Income;
 
 public class IncomeService
 {
@@ -30,7 +31,7 @@ public class IncomeService
             return ServiceResult<IncomeDto>.Failure("You are not authorized", ResultCode.Unauthorized);
         }
         
-        var income = _mapper.Map<Income>(incomeDto);
+        var income = _mapper.Map<DbModel.Entities.Income>(incomeDto);
         income.UserId = user.Id;
         income.User = user;
         

@@ -1,4 +1,5 @@
 using ExpenseManagerAPI.Services;
+using ExpenseManagerAPI.Services.Balance;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

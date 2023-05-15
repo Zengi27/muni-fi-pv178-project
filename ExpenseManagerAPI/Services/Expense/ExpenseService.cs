@@ -2,9 +2,10 @@ using AutoMapper;
 using DbModel;
 using DbModel.Entities;
 using ExpenseManagerAPI.DTOs.Expense;
+using ExpenseManagerAPI.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExpenseManagerAPI.Services;
+namespace ExpenseManagerAPI.Services.Expense;
 
 public class ExpenseService
 {
@@ -30,7 +31,7 @@ public class ExpenseService
             return ServiceResult<ExpenseDto>.Failure("You are not authorized", ResultCode.Unauthorized);
         }
         
-        var expense = _mapper.Map<Expense>(expenseDto);
+        var expense = _mapper.Map<DbModel.Entities.Expense>(expenseDto);
         expense.UserId = user.Id;
         expense.User = user;
         

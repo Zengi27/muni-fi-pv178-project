@@ -1,7 +1,10 @@
 using System.Text;
 using DbModel;
 using DbModel.Entities;
-using ExpenseManagerAPI.Services;
+using ExpenseManagerAPI.Services.Auth;
+using ExpenseManagerAPI.Services.Balance;
+using ExpenseManagerAPI.Services.Expense;
+using ExpenseManagerAPI.Services.Income;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

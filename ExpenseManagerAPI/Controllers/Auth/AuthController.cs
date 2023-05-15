@@ -1,5 +1,6 @@
 using ExpenseManagerAPI.DTOs.User;
 using ExpenseManagerAPI.Services;
+using ExpenseManagerAPI.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManagerAPI.Controllers.Auth;
