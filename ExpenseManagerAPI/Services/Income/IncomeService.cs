@@ -1,23 +1,22 @@
 using AutoMapper;
 using DbModel;
-using DbModel.Entities;
 using ExpenseManagerAPI.DTOs.Income;
-using ExpenseManagerAPI.Services.Auth;
+using ExpenseManagerAPI.Services.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseManagerAPI.Services.Income;
 
 public class IncomeService
 {
-    private readonly UserManager<User> _userManager;
-    private readonly AuthService _authService;
+    private readonly UserManager<DbModel.Entities.User> _userManager;
+    private readonly UserService _userService;
     private readonly ExpenseManagerDbContext _context;
     private readonly IMapper _mapper;
 
-    public IncomeService(UserManager<User> userManager, AuthService authService, ExpenseManagerDbContext context, IMapper mapper)
+    public IncomeService(UserManager<DbModel.Entities.User> userManager, UserService userService, ExpenseManagerDbContext context, IMapper mapper)
     {
         _userManager = userManager;
-        _authService = authService;
+        _userService = userService;
         _context = context;
         _mapper = mapper;
     }
@@ -43,7 +42,7 @@ public class IncomeService
 
     public async Task<ServiceResult<IncomeDto>> GetUserIncomeById(string username, int incomeId)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
         
         if (user == null)
         {
@@ -64,7 +63,7 @@ public class IncomeService
     
     public async Task<ServiceResult<IEnumerable<IncomeDto>>> GetUserIncomes(string username)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -78,7 +77,7 @@ public class IncomeService
     
     public async Task<ServiceResult<bool>> DeleteIncome(string username, int incomeId)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
         
         if (user == null)
         {
@@ -100,7 +99,7 @@ public class IncomeService
     
     public async Task<ServiceResult<IncomeDto>> UpdateIncome(string username, IncomeDto incomeDto)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -126,7 +125,7 @@ public class IncomeService
     
     public async Task<ServiceResult<decimal>> GetTotalIncome(string username)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {

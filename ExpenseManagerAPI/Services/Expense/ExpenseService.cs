@@ -1,23 +1,22 @@
 using AutoMapper;
 using DbModel;
-using DbModel.Entities;
 using ExpenseManagerAPI.DTOs.Expense;
-using ExpenseManagerAPI.Services.Auth;
+using ExpenseManagerAPI.Services.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseManagerAPI.Services.Expense;
 
 public class ExpenseService
 {
-    private readonly UserManager<User> _userManager;
-    private readonly AuthService _authService;
+    private readonly UserManager<DbModel.Entities.User> _userManager;
+    private readonly UserService _userService;
     private readonly ExpenseManagerDbContext _context;
     private readonly IMapper _mapper;
 
-    public ExpenseService(UserManager<User> userManager, AuthService authService ,ExpenseManagerDbContext context, IMapper mapper)
+    public ExpenseService(UserManager<DbModel.Entities.User> userManager, UserService userService ,ExpenseManagerDbContext context, IMapper mapper)
     {
         _userManager = userManager;
-        _authService = authService;
+        _userService = userService;
         _context = context;
         _mapper = mapper;
     }
@@ -43,7 +42,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<ExpenseDto>> GetUserExpenseById(string username, int expenseId)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
         
         if (user == null)
         {
@@ -64,7 +63,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<IEnumerable<ExpenseDto>>> GetUserExpenses(string username)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -78,7 +77,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<bool>> DeleteExpense(string username, int expenseId)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
         
         if (user == null)
         {
@@ -100,7 +99,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<ExpenseDto>> UpdateExpense(string username, ExpenseDto expenseDto)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -126,7 +125,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<IEnumerable<ExpenseDto>>> FilterByDate(string username, DateTime startDate, DateTime endDate)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -142,7 +141,7 @@ public class ExpenseService
     
     public async Task<ServiceResult<IEnumerable<ExpenseDto>>> GetMostExpensiveExpenses(string username, int count)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -159,7 +158,7 @@ public class ExpenseService
     
     public async Task<ServiceResult<IEnumerable<ExpenseDto>>> GetCheapestExpenses(string username, int count)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
     
         if (user == null)
         {
@@ -176,7 +175,7 @@ public class ExpenseService
     
     public async Task<ServiceResult<ExpenseReportDto>> GetMonthlyExpenseReport(string username, int year, int month)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {
@@ -200,7 +199,7 @@ public class ExpenseService
 
     public async Task<ServiceResult<ExpenseReportDto>> GetYearlyExpenseReport(string username, int year)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
 
         if (user == null)
         {

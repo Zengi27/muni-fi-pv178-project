@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DbModel.Entities;
 using ExpenseManagerAPI.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +11,10 @@ namespace ExpenseManagerAPI.Services.Auth;
 public class AuthService
 {
     private readonly IConfiguration _config;
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<DbModel.Entities.User> _userManager;
+    private readonly SignInManager<DbModel.Entities.User> _signInManager;
 
-    public AuthService(IConfiguration config ,UserManager<User> userManager, SignInManager<User> signInManager)
+    public AuthService(IConfiguration config ,UserManager<DbModel.Entities.User> userManager, SignInManager<DbModel.Entities.User> signInManager)
     {
         _config = config;
         _userManager = userManager;
@@ -44,7 +43,7 @@ public class AuthService
 
     public async Task<AuthenticationResult> RegisterAsync(RegisterUserDto userDto)
     {
-        var user = new User
+        var user = new DbModel.Entities.User
         {
             UserName = userDto.UserName,
             FullName = userDto.FullName,
@@ -69,7 +68,7 @@ public class AuthService
         };
     }
     
-    public async Task<User?> GetCurrentUser(string username)
+    public async Task<DbModel.Entities.User?> GetCurrentUser(string username)
     {
         var user = await _userManager.Users
             .Include(u => u.Expenses)

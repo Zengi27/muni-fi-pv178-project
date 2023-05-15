@@ -1,20 +1,20 @@
 using ExpenseManagerAPI.DTOs.Balance;
-using ExpenseManagerAPI.Services.Auth;
+using ExpenseManagerAPI.Services.User;
 
 namespace ExpenseManagerAPI.Services.Balance;
 
 public class BalanceService
 {
-    private readonly AuthService _authService;
+    private readonly UserService _userService;
 
-    public BalanceService(AuthService authService)
+    public BalanceService(UserService userService)
     {
-        _authService = authService;
+        _userService = userService;
     }
     
     public async Task<ServiceResult<BalanceDto>> CalculateBalance(string username)
     {
-        var user = await _authService.GetCurrentUser(username);
+        var user = await _userService.GetCurrentUser(username);
         
         if (user == null)
         {

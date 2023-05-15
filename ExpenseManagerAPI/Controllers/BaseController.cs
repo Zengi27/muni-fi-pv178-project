@@ -13,6 +13,8 @@ public abstract class BaseController : ControllerBase
                 return Ok(serviceResult.Data);
             case ResultCode.NoContent:
                 return NoContent();
+            case ResultCode.BadRequest:
+                return BadRequest(serviceResult.ErrorMessage);
             case ResultCode.NotFound:
                 return NotFound(serviceResult.ErrorMessage);
             case ResultCode.Unauthorized:

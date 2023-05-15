@@ -5,6 +5,7 @@ using ExpenseManagerAPI.Services.Auth;
 using ExpenseManagerAPI.Services.Balance;
 using ExpenseManagerAPI.Services.Expense;
 using ExpenseManagerAPI.Services.Income;
+using ExpenseManagerAPI.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +46,7 @@ builder.Services.AddTransient<AuthService>();
 builder.Services.AddTransient<ExpenseService>();
 builder.Services.AddTransient<IncomeService>();
 builder.Services.AddTransient<BalanceService>();
+builder.Services.AddTransient<UserService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
