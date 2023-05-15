@@ -31,7 +31,7 @@ public class UserController : BaseController
 
         return HandleServiceResult(serviceResult);
     }
-    
+
     [HttpPost("change-username")]
     public async Task<IActionResult> ChangeUsername(string newUsername)
     {

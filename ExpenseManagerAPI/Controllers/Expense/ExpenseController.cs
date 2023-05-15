@@ -33,7 +33,7 @@ public class ExpenseController : BaseController
         switch (serviceResult.ResultCode)
         {
             case ResultCode.Ok:
-                return CreatedAtAction(nameof(GetExpenseById), new { id = serviceResult.Data.Id }, serviceResult.Data);
+                return CreatedAtAction(nameof(GetExpenseById), new { id = serviceResult.Data!.Id }, serviceResult.Data);
             case ResultCode.Unauthorized:
                 return Unauthorized(serviceResult.ErrorMessage);
             default:

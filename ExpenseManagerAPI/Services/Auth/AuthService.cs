@@ -29,7 +29,7 @@ public class AuthService
             return new AuthenticationResult
             {
                 Success = true,
-                Token = await CreateToken(userDto.UserName)
+                Token = CreateToken(userDto.UserName)
             };
         }
 
@@ -56,7 +56,7 @@ public class AuthService
             return new AuthenticationResult
             {
                 Success = true,
-                Token = await CreateToken(userDto.UserName)
+                Token = CreateToken(userDto.UserName)
             };
         }
 
@@ -67,13 +67,13 @@ public class AuthService
         };
     }
 
-    private async Task<string> CreateToken(string username)
+    private string CreateToken(string username)
     {
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, username)
         };
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
         
         var token = new JwtSecurityToken(

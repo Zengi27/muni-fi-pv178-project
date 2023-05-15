@@ -33,7 +33,7 @@ public class IncomeController : BaseController
         switch (serviceResult.ResultCode)
         {
             case ResultCode.Ok:
-                return CreatedAtAction(nameof(GetIncomeById), new { id = serviceResult.Data.Id }, serviceResult.Data);
+                return CreatedAtAction(nameof(GetIncomeById), new { id = serviceResult.Data!.Id }, serviceResult.Data);
             case ResultCode.Unauthorized:
                 return Unauthorized(serviceResult.ErrorMessage);
             default:
