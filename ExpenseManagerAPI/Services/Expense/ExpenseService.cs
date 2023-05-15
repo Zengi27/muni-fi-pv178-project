@@ -220,4 +220,19 @@ public class ExpenseService
         return ServiceResult<ExpenseReportDto>.Success(monthlyReport);
     }
     
+    public async Task<ServiceResult<decimal>> GetTotalExpense(string username)
+    {
+        var user = await _userService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<decimal>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var totalExpense = user.Expenses
+            .Sum(e => e.Amount);
+
+        return ServiceResult<decimal>.Success(totalExpense);
+    }
+    
 }

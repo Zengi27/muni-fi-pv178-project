@@ -175,4 +175,19 @@ public class ExpenseController : BaseController
 
         return HandleServiceResult(serviceResult);
     }
+    
+    [HttpGet("total")]
+    public async Task<IActionResult> GetTotalExpense()
+    {
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
+        var serviceResult = await _expenseService.GetTotalExpense(username);
+
+        return HandleServiceResult(serviceResult);
+    }
 }
