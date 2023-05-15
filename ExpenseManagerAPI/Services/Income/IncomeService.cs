@@ -137,4 +137,20 @@ public class IncomeService
 
         return ServiceResult<decimal>.Success(totalIncome);
     }
+    
+    public async Task<ServiceResult<IEnumerable<IncomeDto>>> FilterByDate(string username, DateTime startDate, DateTime endDate)
+    {
+        var user = await _userService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<IEnumerable<IncomeDto>>.Failure("You are not authorized", ResultCode.Unauthorized);
+        } 
+        
+        var incomes = user.Incomes
+            .Where(i => i.Date >= startDate && i.Date <= endDate)
+            .Select(i => _mapper.Map<IncomeDto>(i));
+        
+        return ServiceResult<IEnumerable<IncomeDto>>.Success(incomes);
+    }
 }

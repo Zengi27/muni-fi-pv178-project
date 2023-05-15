@@ -115,4 +115,19 @@ public class IncomeController : BaseController
 
         return HandleServiceResult(serviceResult);
     }
+    
+    [HttpGet("filter-by-date")]
+    public async Task<IActionResult> GetExpensesByDateRange(DateTime startDate, DateTime? endDate = null)
+    {
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
+        var serviceResult = await _incomeService.FilterByDate(username, startDate, endDate ?? DateTime.UtcNow);
+    
+        return HandleServiceResult(serviceResult);
+    }
 }
