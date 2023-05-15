@@ -22,4 +22,4 @@ Expense Manager API is a RESTful web service that allows users to manage their e
 
 ## Documentation
 
-The API documentation is available through Swagger. Once the application is running, you can access the Swagger UI by navigating to `http://localhost:5058/swagger/index.html`.
+The API documentation is available through Swagger. Once the application is running, you can access the Swagger UI by navigating to http://localhost:5058/swagger/index.html.
