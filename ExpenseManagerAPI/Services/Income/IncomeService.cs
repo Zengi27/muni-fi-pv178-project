@@ -61,4 +61,81 @@ public class IncomeService
 
         return ServiceResult<IncomeDto>.Success(incomeDto);
     }
+    
+    public async Task<ServiceResult<IEnumerable<IncomeDto>>> GetUserIncomes(string username)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<IEnumerable<IncomeDto>>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+        
+        var incomeDtos = _mapper.Map<IEnumerable<IncomeDto>>(user.Incomes);
+
+        return ServiceResult<IEnumerable<IncomeDto>>.Success(incomeDtos);
+    }
+    
+    public async Task<ServiceResult<bool>> DeleteIncome(string username, int incomeId)
+    {
+        var user = await _authService.GetCurrentUser(username);
+        
+        if (user == null)
+        {
+            return ServiceResult<bool>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+        
+        var income = user.Incomes.FirstOrDefault(i => i.Id == incomeId);
+        
+        if (income == null)
+        {
+            return ServiceResult<bool>.Failure("Income with id: {incomeId} not found.", ResultCode.NotFound);
+        }
+        
+        _context.Incomes.Remove(income);
+        await _context.SaveChangesAsync();
+
+        return ServiceResult<bool>.Success(true, ResultCode.NoContent);
+    }
+    
+    public async Task<ServiceResult<IncomeDto>> UpdateIncome(string username, IncomeDto incomeDto)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<IncomeDto>.Failure("You are not authorized", ResultCode.Unauthorized);
+        } 
+        
+        var income = user.Incomes.FirstOrDefault(i => i.Id == incomeDto.Id);
+        
+        if (income == null)
+        {
+            return ServiceResult<IncomeDto>.Failure("Income not found.", ResultCode.NotFound);
+        }
+
+        income.Amount = incomeDto.Amount;
+        income.Date = incomeDto.Date;
+        income.Description = incomeDto.Description;
+
+        _context.Incomes.Update(income);
+        await _context.SaveChangesAsync();
+        
+        return ServiceResult<IncomeDto>.Success(_mapper.Map<IncomeDto>(income));
+    }
+    
+    public async Task<ServiceResult<decimal>> GetTotalIncome(string username)
+    {
+        var user = await _authService.GetCurrentUser(username);
+
+        if (user == null)
+        {
+            return ServiceResult<decimal>.Failure("You are not authorized", ResultCode.Unauthorized);
+        }
+
+        var totalIncome = user.Incomes
+            .Sum(i => i.Amount);
+
+        return ServiceResult<decimal>.Success(totalIncome);
+    }
 }

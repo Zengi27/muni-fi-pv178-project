@@ -43,4 +43,40 @@ public class IncomeController : BaseController
         
         return HandleServiceResult(serviceResult);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetExpenses()
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _incomeService.GetUserIncomes(username);
+
+        return HandleServiceResult(serviceResult);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteExpense(int id)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _incomeService.DeleteIncome(username, id);
+
+        return HandleServiceResult(serviceResult);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateExpense(IncomeDto incomeDto)
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _incomeService.UpdateIncome(username, incomeDto);
+
+        return HandleServiceResult(serviceResult);
+    }
+    
+    [HttpGet("total")]
+    public async Task<IActionResult> GetTotalIncome()
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _incomeService.GetTotalIncome(username);
+
+        return HandleServiceResult(serviceResult);
+    }
 }
