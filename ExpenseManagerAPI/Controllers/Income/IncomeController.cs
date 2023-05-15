@@ -21,7 +21,13 @@ public class IncomeController : BaseController
     [HttpPost]
     public async Task<IActionResult> AddIncome(AddIncomeDto addIncomeDto)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+     
         var serviceResult = await _incomeService.AddIncomeForUser(username, addIncomeDto);
 
         switch (serviceResult.ResultCode)
@@ -38,7 +44,13 @@ public class IncomeController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetIncomeById(int id)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _incomeService.GetUserIncomeById(username, id);
         
         return HandleServiceResult(serviceResult);
@@ -47,7 +59,13 @@ public class IncomeController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetExpenses()
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _incomeService.GetUserIncomes(username);
 
         return HandleServiceResult(serviceResult);
@@ -56,7 +74,13 @@ public class IncomeController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteExpense(int id)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _incomeService.DeleteIncome(username, id);
 
         return HandleServiceResult(serviceResult);
@@ -65,7 +89,13 @@ public class IncomeController : BaseController
     [HttpPut]
     public async Task<IActionResult> UpdateExpense(IncomeDto incomeDto)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _incomeService.UpdateIncome(username, incomeDto);
 
         return HandleServiceResult(serviceResult);
@@ -74,7 +104,13 @@ public class IncomeController : BaseController
     [HttpGet("total")]
     public async Task<IActionResult> GetTotalIncome()
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _incomeService.GetTotalIncome(username);
 
         return HandleServiceResult(serviceResult);

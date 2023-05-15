@@ -23,4 +23,9 @@ public abstract class BaseController : ControllerBase
                 return StatusCode(500);
         }
     }
+    
+    protected string? GetUsername()
+    {
+        return User.Identity?.Name;
+    }
 }

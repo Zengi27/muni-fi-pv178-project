@@ -21,7 +21,13 @@ public class ExpenseController : BaseController
     [HttpPost]
     public async Task<IActionResult> AddExpense(AddExpenseDto addExpenseDto)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.AddExpenseForUser(username, addExpenseDto);
 
         switch (serviceResult.ResultCode)
@@ -38,7 +44,13 @@ public class ExpenseController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetExpenseById(int id)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetUserExpenseById(username, id);
         
         return HandleServiceResult(serviceResult);
@@ -47,7 +59,13 @@ public class ExpenseController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetExpenses()
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetUserExpenses(username);
 
         return HandleServiceResult(serviceResult);
@@ -56,7 +74,13 @@ public class ExpenseController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteExpense(int id)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.DeleteExpense(username, id);
 
         return HandleServiceResult(serviceResult);
@@ -65,7 +89,13 @@ public class ExpenseController : BaseController
     [HttpPut]
     public async Task<IActionResult> UpdateExpense(ExpenseDto expenseDto)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.UpdateExpense(username, expenseDto);
 
         return HandleServiceResult(serviceResult);
@@ -74,7 +104,13 @@ public class ExpenseController : BaseController
     [HttpGet("filter-by-date")]
     public async Task<IActionResult> GetExpensesByDateRange(DateTime startDate, DateTime? endDate = null)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.FilterByDate(username, startDate, endDate ?? DateTime.UtcNow);
     
         return HandleServiceResult(serviceResult);
@@ -83,7 +119,13 @@ public class ExpenseController : BaseController
     [HttpGet("most-expensive/{count}")]
     public async Task<IActionResult> GetMostExpensiveExpenses(int count)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetMostExpensiveExpenses(username, count);
 
         return HandleServiceResult(serviceResult);
@@ -92,7 +134,13 @@ public class ExpenseController : BaseController
     [HttpGet("cheapest/{count}")]
     public async Task<IActionResult> GetCheapestExpenses(int count)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetCheapestExpenses(username, count);
 
         return HandleServiceResult(serviceResult);
@@ -101,7 +149,13 @@ public class ExpenseController : BaseController
     [HttpGet("monthly-report/{year}/{month}")]
     public async Task<IActionResult> GetMonthlyExpenseReport(int year, int month)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetMonthlyExpenseReport(username, year, month);
 
         return HandleServiceResult(serviceResult);
@@ -110,7 +164,13 @@ public class ExpenseController : BaseController
     [HttpGet("yearly-report/{year}")]
     public async Task<IActionResult> GetYearlyExpenseReport(int year)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _expenseService.GetYearlyExpenseReport(username, year);
 
         return HandleServiceResult(serviceResult);

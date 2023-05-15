@@ -20,7 +20,13 @@ public class UserController : BaseController
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePassword(ChangeUserPasswordDto changeUserPasswordDto)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _userService.ChangePassword(username, changeUserPasswordDto.CurrentPassword, changeUserPasswordDto.NewPassword);
 
         return HandleServiceResult(serviceResult);
@@ -29,7 +35,13 @@ public class UserController : BaseController
     [HttpPost("change-username")]
     public async Task<IActionResult> ChangeUsername(string newUsername)
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _userService.ChangeUsername(username, newUsername);
         
         return HandleServiceResult(serviceResult);

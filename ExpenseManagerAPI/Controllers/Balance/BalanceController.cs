@@ -20,7 +20,13 @@ public class BalanceController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetExpenses()
     {
-        var username = User.Identity.Name;
+        var username = GetUsername();
+
+        if (username == null)
+        {
+            return BadRequest();
+        }
+        
         var serviceResult = await _balanceService.CalculateBalance(username);
 
         return HandleServiceResult(serviceResult);
