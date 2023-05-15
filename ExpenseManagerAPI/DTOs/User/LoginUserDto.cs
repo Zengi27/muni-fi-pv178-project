@@ -1,19 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ExpenseManagerAPI.DTOs;
+namespace ExpenseManagerAPI.DTOs.User;
 
-public class RegisterUserDto
+public class LoginUserDto
 {
     [Required]
     public string UserName { get; set; }
     
-    [Required]
-    public string FullName { get; set; }
-
-    [Required]
-    //[EmailAddress]
-    public string Email { get; set; }
-
     [Required]
     //[DataType(DataType.Password)]
     public string Password { get; set; }

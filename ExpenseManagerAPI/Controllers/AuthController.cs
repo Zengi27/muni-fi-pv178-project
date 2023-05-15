@@ -1,4 +1,5 @@
 using ExpenseManagerAPI.DTOs;
+using ExpenseManagerAPI.DTOs.User;
 using ExpenseManagerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 

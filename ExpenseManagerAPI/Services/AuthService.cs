@@ -4,6 +4,7 @@ using System.Text;
 using DbModel;
 using DbModel.Entities;
 using ExpenseManagerAPI.DTOs;
+using ExpenseManagerAPI.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
