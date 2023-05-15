@@ -41,6 +41,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddTransient<AuthService>();
 builder.Services.AddTransient<ExpenseService>();
 builder.Services.AddTransient<IncomeService>();
+builder.Services.AddTransient<BalanceService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
