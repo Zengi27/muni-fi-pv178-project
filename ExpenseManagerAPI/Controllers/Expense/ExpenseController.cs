@@ -3,12 +3,12 @@ using ExpenseManagerAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExpenseManagerAPI.Controllers;
+namespace ExpenseManagerAPI.Controllers.Expense;
 
 [ApiController]
 [Authorize]
 [Route("expenses")]
-public class ExpenseController : ControllerBase
+public class ExpenseController : BaseController
 {
     private readonly ExpenseService _expenseService;
 
@@ -113,22 +113,5 @@ public class ExpenseController : ControllerBase
         var serviceResult = await _expenseService.GetYearlyExpenseReport(username, year);
 
         return HandleServiceResult(serviceResult);
-    }
-    
-    private IActionResult HandleServiceResult<T>(ServiceResult<T> serviceResult)
-    {
-        switch (serviceResult.ResultCode)
-        {
-            case ResultCode.Ok:
-                return Ok(serviceResult.Data);
-            case ResultCode.NoContent:
-                return NoContent();
-            case ResultCode.NotFound:
-                return NotFound(serviceResult.ErrorMessage);
-            case ResultCode.Unauthorized:
-                return Unauthorized(serviceResult.ErrorMessage);
-            default:
-                return StatusCode(500);
-        }
     }
 }

@@ -1,9 +1,8 @@
-using ExpenseManagerAPI.DTOs;
 using ExpenseManagerAPI.DTOs.User;
 using ExpenseManagerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExpenseManagerAPI.Controllers;
+namespace ExpenseManagerAPI.Controllers.Auth;
 
 [ApiController]
 [Route("auth")]

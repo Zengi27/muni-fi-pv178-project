@@ -1,0 +1,27 @@
+using ExpenseManagerAPI.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ExpenseManagerAPI.Controllers.Balance;
+
+[ApiController]
+[Authorize]
+[Route("balance")]
+public class BalanceController : BaseController
+{
+    private readonly BalanceService _balanceService;
+
+    public BalanceController(BalanceService balanceService)
+    {
+        _balanceService = balanceService;
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetExpenses()
+    {
+        var username = User.Identity.Name;
+        var serviceResult = await _balanceService.CalculateBalance(username);
+
+        return HandleServiceResult(serviceResult);
+    }
+}

@@ -3,12 +3,12 @@ using ExpenseManagerAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExpenseManagerAPI.Controllers;
+namespace ExpenseManagerAPI.Controllers.Income;
 
 [ApiController]
 [Authorize]
 [Route("incomes")]
-public class IncomeController : ControllerBase
+public class IncomeController : BaseController
 {
     private readonly IncomeService _incomeService;
 
@@ -41,22 +41,5 @@ public class IncomeController : ControllerBase
         var serviceResult = await _incomeService.GetUserIncomeById(username, id);
         
         return HandleServiceResult(serviceResult);
-    }
-    
-    private IActionResult HandleServiceResult<T>(ServiceResult<T> serviceResult)
-    {
-        switch (serviceResult.ResultCode)
-        {
-            case ResultCode.Ok:
-                return Ok(serviceResult.Data);
-            case ResultCode.NoContent:
-                return NoContent();
-            case ResultCode.NotFound:
-                return NotFound(serviceResult.ErrorMessage);
-            case ResultCode.Unauthorized:
-                return Unauthorized(serviceResult.ErrorMessage);
-            default:
-                return StatusCode(500);
-        }
     }
 }
