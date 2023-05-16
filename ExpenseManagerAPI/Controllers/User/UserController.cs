@@ -17,7 +17,7 @@ public class UserController : BaseController
         _userService = userService;
     }
 
-    [HttpPost("change-password")]
+    [HttpPut("change-password")]
     public async Task<IActionResult> ChangePassword(ChangeUserPasswordDto changeUserPasswordDto)
     {
         var username = GetUsername();
@@ -32,7 +32,7 @@ public class UserController : BaseController
         return HandleServiceResult(serviceResult);
     }
 
-    [HttpPost("change-username")]
+    [HttpPut("change-username")]
     public async Task<IActionResult> ChangeUsername(string newUsername)
     {
         var username = GetUsername();

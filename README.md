@@ -9,7 +9,7 @@ Expense Manager API is a RESTful web service that allows users to manage their e
 - Create, retrieve, update, and delete income records
 - Get total income and total expense for a user
 - Filter expenses and income records based on specific criteria
-- Change user email and password
+- Change username and password
 
 ## Technologies Used
 
