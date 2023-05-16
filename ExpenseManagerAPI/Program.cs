@@ -24,11 +24,8 @@ builder.Services.AddDbContext<ExpenseManagerDbContext>(options =>
 builder.Services.AddDefaultIdentity<User>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
-        options.Password.RequireDigit = false;
         options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequiredLength = 4;
-        options.Password.RequireLowercase = false;
-        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 6;
     })
     .AddEntityFrameworkStores<ExpenseManagerDbContext>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
