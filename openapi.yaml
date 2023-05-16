@@ -1,0 +1,490 @@
+openapi: 3.0.1
+info:
+  title: ExpenseManagerAPI
+  version: '1.0'
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginUserDto'
+      responses:
+        '200':
+          description: Success
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserDto'
+      responses:
+        '200':
+          description: Success
+  /balance:
+    get:
+      tags:
+        - Balance
+      responses:
+        '200':
+          description: Success
+  /expenses:
+    post:
+      tags:
+        - Expense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddExpenseDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AddExpenseDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AddExpenseDto'
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - Expense
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Expense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ExpenseDto'
+      responses:
+        '200':
+          description: Success
+  '/expenses/{id}':
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - Expense
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  /expenses/filter-by-date:
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: startDate
+          in: query
+          style: form
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          style: form
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+  '/expenses/most-expensive/{count}':
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: count
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/expenses/cheapest/{count}':
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: count
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/expenses/monthly-report/{year}/{month}':
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: month
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/expenses/yearly-report/{year}':
+    get:
+      tags:
+        - Expense
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  /expenses/total:
+    get:
+      tags:
+        - Expense
+      responses:
+        '200':
+          description: Success
+  /incomes:
+    post:
+      tags:
+        - Income
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddIncomeDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AddIncomeDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AddIncomeDto'
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - Income
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Income
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncomeDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/IncomeDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/IncomeDto'
+      responses:
+        '200':
+          description: Success
+  '/incomes/{id}':
+    get:
+      tags:
+        - Income
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - Income
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  /incomes/total:
+    get:
+      tags:
+        - Income
+      responses:
+        '200':
+          description: Success
+  /incomes/filter-by-date:
+    get:
+      tags:
+        - Income
+      parameters:
+        - name: startDate
+          in: query
+          style: form
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          style: form
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+  /user/change-password:
+    put:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserPasswordDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserPasswordDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserPasswordDto'
+      responses:
+        '200':
+          description: Success
+  /user/change-username:
+    put:
+      tags:
+        - User
+      parameters:
+        - name: newUsername
+          in: query
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    AddExpenseDto:
+      required:
+        - amount
+        - date
+        - description
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          default: 42
+        date:
+          type: string
+          format: date-time
+          default: '2023-05-10'
+        description:
+          minLength: 1
+          type: string
+          default: Food
+      additionalProperties: false
+    AddIncomeDto:
+      required:
+        - amount
+        - date
+        - description
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          default: 100
+        date:
+          type: string
+          format: date-time
+          default: '2023-05-02'
+        description:
+          minLength: 1
+          type: string
+          default: Salary
+      additionalProperties: false
+    ChangeUserPasswordDto:
+      required:
+        - currentPassword
+        - newPassword
+      type: object
+      properties:
+        currentPassword:
+          minLength: 1
+          type: string
+          format: password
+          default: Password987
+        newPassword:
+          minLength: 1
+          type: string
+          format: password
+          default: Password123
+      additionalProperties: false
+    ExpenseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          default: 2
+        amount:
+          type: number
+          format: double
+          default: 42
+        date:
+          type: string
+          format: date-time
+          default: '2023-05-10'
+        description:
+          type: string
+          default: Food
+          nullable: true
+      additionalProperties: false
+    IncomeDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          default: 2
+        amount:
+          type: number
+          format: double
+          default: 100
+        date:
+          type: string
+          format: date-time
+          default: '2023-05-02'
+        description:
+          type: string
+          default: Salary
+          nullable: true
+      additionalProperties: false
+    LoginUserDto:
+      required:
+        - password
+        - userName
+      type: object
+      properties:
+        userName:
+          minLength: 1
+          type: string
+          default: Novak22
+        password:
+          minLength: 1
+          type: string
+          format: password
+          default: Password987
+      additionalProperties: false
+    RegisterUserDto:
+      required:
+        - email
+        - fullName
+        - password
+        - userName
+      type: object
+      properties:
+        userName:
+          minLength: 1
+          type: string
+          default: Novak22
+        fullName:
+          minLength: 1
+          type: string
+          default: Jan Novak
+        email:
+          minLength: 1
+          type: string
+          format: email
+          default: novak@gmail.com
+        password:
+          minLength: 1
+          type: string
+          format: password
+          default: Password987
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: http
+      description: JSON Web Token based security
+      scheme: Bearer
+      bearerFormat: JWT
+security:
+  - Bearer: [ ]
